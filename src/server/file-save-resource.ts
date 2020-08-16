@@ -3,17 +3,21 @@ import * as fs from "fs";
 //const fs = require("fs")
 export class FileSaveResource {
 
-    constructor() {}
-
-    public handleFileSaveRequest(req, res) {
-        console.log(req.body["content"])
-
+    public handleFileSave(req, res) {
         const filePath = req.body.filePath
         const newContent = req.body.content
         fs.writeFileSync(filePath, newContent, "utf-8")
 
         res.send({
-            "newContent": fs.readFileSync(filePath, "utf-8").toString()
+            "content": fs.readFileSync(filePath, "utf-8").toString()
+        })
+    }
+
+    public handleReadFile(req, res) {
+
+        const file = req.query.filePath
+        res.send({
+            "content": fs.readFileSync(file, "utf-8")
         })
     }
 }

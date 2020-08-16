@@ -1,17 +1,14 @@
 import React from 'react';
 import './App.css';
-import {EditForm} from "./editor/edit-form";
+import {FileEditor} from "./file-editor";
 
 function App() {
     return (
         <div className="App">
             <body>
-            <div className={"container"}>
-                <div className={"editingSpaceDiv"}>
-                    <EditForm/>
-                </div>
+            <div className={"container mt-5"}>
+                <FileEditor/>
             </div>
-
             </body>
 
         </div>

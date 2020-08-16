@@ -1,4 +1,5 @@
 import React from 'react';
+import {FormTextarea} from 'shards-react';
 
 export interface EditingSpaceProps {
 
@@ -13,7 +14,10 @@ export class EditingSpace extends React.Component<any, any> {
 
     render() {
         return (
-            <textarea value={this.props.content} rows={40} cols={115} onChange={this.props.onChangeHandler}/>
+            <FormTextarea
+                value={this.props.content}
+                rows={25} cols={115}
+                onChange={this.props.onChangeHandler}/>
         )
     }
 }
