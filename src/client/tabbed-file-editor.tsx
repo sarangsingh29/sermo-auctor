@@ -9,6 +9,7 @@ export class TabbedFileEditor extends React.Component<any, any> {
         super(props)
 
         this.state = {
+            lastTabIndex: 0,
             tabs: {}
         }
 
@@ -33,17 +34,16 @@ export class TabbedFileEditor extends React.Component<any, any> {
                         tabsArr.map(tab => {
                             return (
                                 <li className={"nav-item row"}>
-                                        <a className="nav-link col-7"
-                                           data-toggle="tab"
-                                           href={`#${tab.key}`}>
-                                            {tab.name}
-                                        </a>
-                                        <a className={"col-1"}
-                                           onClick={() => this.onTabClick(tab.key)}>
-                                            <img width={20} height={30} src={closeIcon}/>
-                                        </a>
+                                    <a className="nav-link col-7"
+                                       data-toggle="tab"
+                                       href={`#${tab.key}`}>
+                                        {tab.name}
+                                    </a>
+                                    <a className={"col-1"}
+                                       onClick={() => this.onTabClose(tab.key)}>
+                                        <img width={20} height={30} src={closeIcon}/>
+                                    </a>
                                 </li>
-
                             )
                         })
                     }
@@ -72,7 +72,7 @@ export class TabbedFileEditor extends React.Component<any, any> {
 
     }
 
-    private onTabClick(tabKey) {
+    private onTabClose(tabKey) {
         const tabs = this.state.tabs
         delete tabs[tabKey]
         this.setState({
@@ -91,14 +91,15 @@ export class TabbedFileEditor extends React.Component<any, any> {
 
     private createNewTab() {
         const tabs = this.state.tabs
-        let totalTabCount = Object.keys(tabs).length
-        const newTabKey = `tab_${totalTabCount++}`
+        let updatedLastTabIndex = this.state.lastTabIndex + 1
+        const newTabKey = `tab_${updatedLastTabIndex}`
         let newTab = {
             key: newTabKey,
             name: "untitled"
         }
 
         this.setState({
+            lastTabIndex: updatedLastTabIndex,
             tabs: {...tabs, [newTabKey]: newTab}
         })
     }
