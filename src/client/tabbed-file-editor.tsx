@@ -32,8 +32,7 @@ export class TabbedFileEditor extends React.Component<any, any> {
                     {
                         tabsArr.map(tab => {
                             return (
-                                <li className={"nav-item"}>
-                                    <div className={"row"}>
+                                <li className={"nav-item row"}>
                                         <a className="nav-link col-7"
                                            data-toggle="tab"
                                            href={`#${tab.key}`}>
@@ -43,7 +42,6 @@ export class TabbedFileEditor extends React.Component<any, any> {
                                            onClick={() => this.onTabClick(tab.key)}>
                                             <img width={20} height={30} src={closeIcon}/>
                                         </a>
-                                    </div>
                                 </li>
 
                             )
