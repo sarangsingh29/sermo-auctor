@@ -52,7 +52,7 @@ export class DirectoryListings extends React.Component<any, any> {
                                                                this.displayUpdatedListings(`${entry.path}/${subPath.name}`)
                                                            } else {
                                                                //Load the file from server, if not a directory.
-                                                               this.props.loadContent(`${entry.path}/${subPath.name}`)
+                                                               this.props.onFileSelection(`${entry.path}/${subPath.name}`)
                                                            }
                                                        }}
                                                     >{subPath.name}</a>

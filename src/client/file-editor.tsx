@@ -9,6 +9,7 @@ export interface FileEditorProps {
 
 export class FileEditor extends React.Component<any, any> {
 
+    private static ROOT_DIR = "/"
     private static FILE_SAVE_RESOURCE = "/file/write"
     private static FILE_LOAD_RESOURCE = "/file/read"
 
@@ -31,23 +32,40 @@ export class FileEditor extends React.Component<any, any> {
         this.handleFileNameInput = this.handleFileNameInput.bind(this)
         this.handleFileNameInput = this.handleFileNameInput.bind(this)
         this.loadFileFromServer = this.loadFileFromServer.bind(this)
+        this.handleFileSelectionFromBreadCrumb = this.handleFileSelectionFromBreadCrumb.bind(this)
     }
 
+    render() {
+        return (
+            <div className={"container-fluid mt-5 lg"}>
+                <DirectoryListings onFileSelection={this.handleFileSelectionFromBreadCrumb}/>
+                <EditForm
+                    content={this.state.content}
+                    handleChange={this.handleChange}
+                    handleFileSelection={this.handleFileSelection}
+                    handleFormSubmit={this.handleFormSubmit}
+                    handleFileNameInput={this.handleFileNameInput}
+                    validPath={this.state.validPath}
+                    filePath={this.state.filePath}
+                />
+            </div>
+        )
+    }
 
-    handleChange(event) {
+    private handleChange(event) {
         this.setState({
             content: event.target.value
         })
     }
 
-    handleFileLoad(event) {
+    private handleFileLoad(event) {
         const content = event["target"].result
         this.setState({
             content: content
         })
     }
 
-    handleFileSelection(event) {
+    private handleFileSelection(event) {
         console.log(event["target"].files[0])
         let file = event["target"].files[0]
         let reader = new FileReader();
@@ -55,7 +73,12 @@ export class FileEditor extends React.Component<any, any> {
         reader.onloadend = this.handleFileLoad
     }
 
-    loadFileFromServer(fullPath) {
+    private handleFileSelectionFromBreadCrumb(filePath) {
+        this.loadFileFromServer(filePath)
+        this.props.onFileSelection(filePath.split(FileEditor.ROOT_DIR).pop())
+    }
+
+    private loadFileFromServer(fullPath) {
         fetch(`${FileEditor.FILE_LOAD_RESOURCE}?filePath=${fullPath}`, {
             method: "GET",
             headers: {
@@ -70,9 +93,10 @@ export class FileEditor extends React.Component<any, any> {
                     validPath: true
                 })
             });
+
     }
 
-    handleFormSubmit(event) {
+    private handleFormSubmit(event) {
         event.preventDefault()
 
         fetch(FileEditor.FILE_SAVE_RESOURCE, {
@@ -96,25 +120,8 @@ export class FileEditor extends React.Component<any, any> {
     private handleFileNameInput(event) {
         const inputPath = event.target.value
         this.setState({
-            validPath: !inputPath.endsWith("/"),
+            validPath: !inputPath.endsWith(FileEditor.ROOT_DIR),
             filePath: inputPath
         })
-    }
-
-    render() {
-        return (
-            <div className={"container mt-5"}>
-                <DirectoryListings loadContent={this.loadFileFromServer}/>
-                <EditForm
-                    content={this.state.content}
-                    handleChange={this.handleChange}
-                    handleFileSelection={this.handleFileSelection}
-                    handleFormSubmit={this.handleFormSubmit}
-                    handleFileNameInput={this.handleFileNameInput}
-                    validPath={this.state.validPath}
-                    filePath={this.state.filePath}
-                />
-            </div>
-        )
     }
 }

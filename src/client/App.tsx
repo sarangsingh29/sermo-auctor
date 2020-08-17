@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import {FileEditor} from "./file-editor";
+import {TabbedFileEditor} from "./tabbed-file-editor";
 
 function App() {
     return (
         <div className="App">
             <body>
-            <div className={"container mt-5"}>
-                <FileEditor/>
-            </div>
+
+            <TabbedFileEditor/>
+
             </body>
 
         </div>

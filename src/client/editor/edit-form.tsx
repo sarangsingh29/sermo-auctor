@@ -34,7 +34,8 @@ export class EditForm extends React.Component<any, any> {
                     <div className={"row justify-content-end"}>
 
                         <div className={"col-2 custom-file"}>
-                            <input type={"file"} className={"custom-file-input"} onChange={this.props.handleFileSelection}/>
+                            <input type={"file"} className={"custom-file-input"}
+                                   onChange={this.props.handleFileSelection}/>
                             <label className={"custom-file-label"}>Load File</label>
                         </div>
 

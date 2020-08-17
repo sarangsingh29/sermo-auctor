@@ -46,8 +46,8 @@ export class DirectoryOperations {
                     isDirectory: dirent.isDirectory()
                 }
             })
-            //Uncomment the next line to prevent hidden flies from being listed.
-            //.filter(entry => ! entry.name.startsWith("."))
+        //Uncomment the next line to prevent hidden flies from being listed.
+        //.filter(entry => ! entry.name.startsWith("."))
     }
 
 }
